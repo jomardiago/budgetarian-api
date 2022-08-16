@@ -1,0 +1,24 @@
+{
+  "name": "budgetarian-api",
+  "version": "1.0.0",
+  "description": "API Project for Budgetarian Application written in NodeJS Express",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "Budgetarian"
+  ],
+  "author": "Jose Diago",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mongoose": "^6.5.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
