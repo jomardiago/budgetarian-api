@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(cors());
 
-app.use('/api/v1/grocery-items', groceryItemsRoutes);
+app.use('/grocery-items', groceryItemsRoutes);
 
 app.get('/liveness', (_, res) => {
   res.send('budgetarian-api is healthy...');
