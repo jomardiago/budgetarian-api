@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
-const productsRoutes = require('./routes/products');
+const groceryItemsRoutes = require('./routes/groceryItems');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -15,7 +15,7 @@ app.get('/liveness', (_, res) => {
   res.send('budgetarian-api is healthy...');
 });
 
-app.use('/api/v1/products', productsRoutes);
+app.use('/api/v1/grocery-items', groceryItemsRoutes);
 
 app.listen(PORT, () => {
   console.log('express server listening on port', PORT);
