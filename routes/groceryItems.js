@@ -4,8 +4,9 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
-    const groceryItems = await GroceryItem.find();
-    res.status(200).json(groceryItems);
+    // const groceryItems = await GroceryItem.find();
+    // res.status(200).json(groceryItems);
+    res.send('return all grocery items...');
   } catch (error) {
     console.log('unable to fetch all groceryItems...');
     res.status(500).send(error.message);
