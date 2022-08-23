@@ -4,6 +4,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 const groceryItemsRoutes = require('./routes/groceryItems');
+const usersRoutes = require('./routes/users');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/grocery-items', groceryItemsRoutes);
+app.use('/users', usersRoutes);
 
 app.get('/liveness', (_, res) => {
   res.send('budgetarian-api is healthy...');
