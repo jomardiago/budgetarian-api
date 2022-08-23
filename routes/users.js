@@ -37,15 +37,20 @@ router.post('/login', async (req, res) => {
     const { username, password: reqPassword } = req.body;
 
     const user = await User.findOne({ username });
-    const { password } = user;
-    const passwordMatch = await bcrypt.compare(reqPassword, password);
-    
-    if (!passwordMatch) {
-      res.status(404).json({ success: false, message: 'user does not exists...' });
+
+    if (user) {
+      const { password } = user;
+      const passwordMatch = await bcrypt.compare(reqPassword, password);
+
+      if (!passwordMatch) {
+        res.status(404).json({ success: false, message: 'user does not exists...' });
+      } else {
+        const userResponse = { _id: user._id, email: user.email, username: user.username };
+        const token = jwt.sign(userResponse, process.env.SECRET);
+        res.status(200).json({ success: true, token, user: userResponse });
+      }
     } else {
-      const userResponse = { _id: user._id, email: user.email, username: user.username };
-      const token = jwt.sign(userResponse, process.env.SECRET);
-      res.status(200).json({ success: true, token, user: userResponse });
+      res.status(404).json({ success: false, message: 'user does not exists...' });
     }
   } catch (error) {
     res.status(500).send(error.message);
