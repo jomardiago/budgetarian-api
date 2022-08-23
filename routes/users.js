@@ -6,7 +6,7 @@ const router = express.Router();
 
 const salt = 10;
 
-router.post('/', async (req, res) => {
+router.post('/register', async (req, res) => {
   try {
     const { email, username, password } = req.body;
 
@@ -23,7 +23,27 @@ router.post('/', async (req, res) => {
         password: hashedPassword,
       });
       const userData = await newUser.save();
-      const userResponse = { _id: userData._id, email: userData.email, username: userData.email };
+      const userResponse = { _id: userData._id, email: userData.email, username: userData.username };
+      const token = jwt.sign(userResponse, process.env.SECRET);
+      res.status(200).json({ success: true, token, user: userResponse });
+    }
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+router.post('/login', async (req, res) => {
+  try {
+    const { username, password: reqPassword } = req.body;
+
+    const user = await User.findOne({ username });
+    const { password } = user;
+    const passwordMatch = await bcrypt.compare(reqPassword, password);
+    
+    if (!passwordMatch) {
+      res.status(404).json({ success: false, message: 'user does not exists...' });
+    } else {
+      const userResponse = { _id: user._id, email: user.email, username: user.username };
       const token = jwt.sign(userResponse, process.env.SECRET);
       res.status(200).json({ success: true, token, user: userResponse });
     }
