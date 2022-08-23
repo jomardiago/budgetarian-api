@@ -23,8 +23,9 @@ router.post('/', async (req, res) => {
         password: hashedPassword,
       });
       const userData = await newUser.save();
-      const token = jwt.sign({ _id: userData._id, email: userData.email, username: userData.email }, process.env.SECRET);
-      res.status(200).json({ success: true, token });
+      const userResponse = { _id: userData._id, email: userData.email, username: userData.email };
+      const token = jwt.sign(userResponse, process.env.SECRET);
+      res.status(200).json({ success: true, token, user: userResponse });
     }
   } catch (error) {
     res.status(500).send(error.message);
